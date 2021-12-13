@@ -99,7 +99,7 @@ while True:
             if target_price < current_price:
                 btcbuycall = 0
                 if eth > ethfee :
-                    btcbuycall = btcbuycall + 1]
+                    btcbuycall = btcbuycall + 1
                 if krw > 5000 and btc < btcfee:
                     upbit.buy_market_order("KRW-BTC", krw / (2-btcbuycall) * 0.9995)
                     btc_state = 1

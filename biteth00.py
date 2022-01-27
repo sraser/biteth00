@@ -65,7 +65,7 @@ while True:
         now = datetime.datetime.now()
         start_time = get_start_time("KRW-BTC")
         end_time = start_time + datetime.timedelta(days=1)
-        bot = telegram.Bot(token='1895925551:AAEu0Axf5JbQULDuWLtmnJ6DQ1QKW97zbYE')
+        bot = telegram.Bot(token='')
         chat_id = 1636335355
 
         bestcalkBTC, bestcalrorBTC = get_bestk("KRW-BTC")

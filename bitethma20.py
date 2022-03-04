@@ -4,7 +4,7 @@ import telegram
 
 access = ""
 secret = ""
-bot = telegram.Bot(token='')
+bot = telegram.Bot(token=':')
 chat_id = 
 
 inter = "minute240"
@@ -41,11 +41,15 @@ eth_sell_price = 0
 
 btc_ini = get_balance("BTC")
 eth_ini = get_balance("ETH")
-time.sleep(0.2)
+krw = get_balance("KRW")
+time.sleep(0.5)
 btcma5, btcma20, btcma5p, btcma20p = get_ma("KRW-BTC")
-time.sleep(0.2)
+time.sleep(0.5)
 ethma5, ethma20, ethma5p, ethma20p = get_ma("KRW-ETH")
 bot.sendMessage(chat_id=chat_id, text="재접속")
+startmsg = "KRW : %d BTC : %d ETH : %d" % (krw , btc_ini, eth_ini)
+bot.sendMessage(chat_id=chat_id, text=startmsg)
+
 if btc_ini != 0 :
     btc_state = 1
     btc_buy_price = btc_ini
@@ -103,20 +107,22 @@ while True:
             upbit.sell_market_order("KRW-BTC", btc)
             btc_state = 0
             btc_sell_price = current_priceBTC
-            cpt = (btc_buy_price - btc_sell_price) / btc_buy_price + 1
+            cpt = ((btc_sell_price - btc_buy_price) / btc_buy_price) * 100 + 100
             msg = "BTC 매도 %.2f , 수익률 = %.2f %%" % (btc_sell_price, cpt)
-            krw = get_balance("KRW")
-            msg3 = "남은현재돈 = %d 원" % (krw)
+            time.sleep(5)
+            krwbtc = get_balance("KRW")
+            msg3 = "남은현재돈 = %d 원" % (krwbtc)
             bot.sendMessage(chat_id=chat_id, text=msg)
             bot.sendMessage(chat_id=chat_id, text=msg3)
 
         if ethma5 <= ethma20 and ethma5p > ethma20p and eth_state == 1:
             upbit.sell_market_order("KRW-ETH", eth)
             eth_sell_price = current_priceETH
-            cpt = (eth_buy_price - eth_sell_price) / eth_buy_price + 1
+            cpt = ((eth_sell_price - eth_buy_price) / eth_buy_price) * 100 + 100
             msg = "ETH 매도 %.2f , 수익률 = %.2f %%" % (eth_sell_price, cpt)
-            krw = get_balance("KRW")
-            msg3 = "남은현재돈 = %d 원" % (krw)
+            time.sleep(5)
+            krweth = get_balance("KRW")
+            msg3 = "남은현재돈 = %d 원" % (krweth)
             eth_state = 0
             bot.sendMessage(chat_id=chat_id, text=msg)
             bot.sendMessage(chat_id=chat_id, text=msg3)
